@@ -1,0 +1,165 @@
+<script>
+$(document).ready(function() {
+
+        $('.produto .codigo-produto .pull-right').removeClass('pull-right').addClass('marca-produto');
+        
+        $('.produto .codigo-produto .marca-produto b').remove();
+        
+        $('.info-principal-produto .nome-produto').before($('.marca-produto'));
+        
+        $('.marca-produto a').hover(function(){
+            $(this).css('color', '#000'); 
+            }, function(){
+            $(this).css('color', '#a1a1a1'); 
+        });
+        
+        $('.produto .principal .desconto-a-vista').wrapInner('<div class="abriga-precoavista"><div class="preco-avista"></div></div>');
+        
+        $('.preco-avista .icone-listagem-avista').each(function() {
+            $(this).parent().parent().before(this);
+        });
+        
+        $('.abriga-precoavista').append('<div class="preco-economiza"></div>');
+
+    		$('.produto .principal .acoes-produto.disponivel').each(function(){
+				var promocional = $(this).find('.preco-promocional').text().replace('R$ ', '');
+				var avista = $(this).find('.preco-avista strong').text().replace('R$ ', '');
+				var eco = parseFloat(promocional.replace(".", "").replace(",", ".")) - parseFloat(avista.replace(".", "").replace(",", "."));
+				var economiza = eco.toFixed(2).replace(".", ",");
+				$(this).find('.preco-economiza').html('<span>Economize: <strong>R$ '+economiza+'</strong></span>');
+	        });
+	        
+        	if($('.atributos div ul li').length){
+		        $('.atributos div ul li').click(function(){
+		        	$('.preco-economiza').html('<span>Economize: <strong>R$ '+economiza+'</strong></span>');	
+		        });
+        	};
+
+        $('.produto .principal .preco-parcela').parent().addClass('todas-parcelas');
+        
+        $('.produto .principal .preco-parcela').parent().wrapInner('<div class="abriga-parcelas"><div class="parcelas-abrigadas"></div></div>');
+        
+        $('.todas-parcelas').prepend('<svg class="icone-cartao" id="icone-cartao" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 508 508" xml:space="preserve"><g><g><path d="M467,90.1H41c-22.6,0-41,18.4-41,41v245.8c0,22.6,18.4,41,41,41h426c22.6,0,41-18.4,41-41V131.1C508,108.5,489.6,90.1,467,90.1z M491.6,376.9c0,13.6-11,24.6-24.6,24.6H41c-13.6,0-24.6-11-24.6-24.6V221.2h475.2V376.9z M491.6,204.8H16.4v-49.2h475.2V204.8z M491.6,139.3H16.4v-8.2c0-13.6,11-24.6,24.6-24.6h426c13.6,0,24.6,11,24.6,24.6V139.3z"/></g></g><g><g><rect x="49.2" y="352.3" width="65.5" height="16.4"/></g></g><g><g><rect x="147.5" y="352.3" width="65.5" height="16.4"/></g></g><g><g><rect x="245.8" y="352.3" width="65.5" height="16.4"/></g></g><g><g><rect x="344.1" y="352.3" width="65.5" height="16.4"/></g></g><g><g><path d="M417.9,245.7c-7.5,0-14.4,2.2-20.5,5.7c-6.3-3.7-13.2-5.7-20.5-5.7c-22.6,0-41,18.4-41,41c0,22.7,18.4,41,41,41c7.3,0,14.3-2,20.5-5.7c6,3.5,13,5.7,20.5,5.7c22.6,0,41-18.4,41-41C458.9,264.1,440.5,245.7,417.9,245.7z M384.3,310.2c-2.4,0.8-4.9,1.2-7.4,1.2c-13.6,0-24.6-11-24.6-24.6c0-13.6,11-24.6,24.6-24.6c2.6,0,5,0.4,7.4,1.2c-4.8,6.8-7.4,14.9-7.4,23.4S379.5,303.4,384.3,310.2z M417.9,311.4c-13.6,0-24.6-11-24.6-24.6c0-13.6,11-24.6,24.6-24.6c13.6,0,24.6,11,24.6,24.6C442.5,300.4,431.5,311.4,417.9,311.4z"/></g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g></svg>');
+        $('.icone-cartao').css('fill', '#000');
+        
+        if ($('.atributos').length === 0) {
+	        $('.abriga-parcelas').append('<div class="parcelamento"><span>Mais formas de pagamento</span></div>');
+	        $('.todas-parcelas').append($('.parcelas-produto'));
+        }
+        
+        $('.parcelamento span').css('color', '#000');
+        
+        if ($('.produto .principal').find('.atributos').length !== 0){
+            
+            $('.produto .principal .parcelamento span').addClass('desabilitado');
+        }
+        
+        $('.produto .principal .parcelamento span').click(function() {
+            $('.produto .principal .parcelas-produto').slideToggle("slow");
+        });
+        
+        $('.atributos ul li a').hover(function(){
+            $(this).children().css('color', '#000'); 
+            $(this).css('border-color', '#000'); 
+            }, function(){
+            $(this).children().css('color', '#646464'); 
+            $(this).css('border-color', '#dedede'); 
+        });
+        
+        // Adiciona icone ao frete
+        $('.produto .principal .cep label').prepend('<span><i class="fas fa-truck"></i></span>');
+       
+        
+        // Mostra/esconde o botao de frete
+        $('.produto .principal .cep .input-append.input-prepend input').bind('keyup change blur', function() {
+            if (this.value.length > 0) {
+                $('.produto .principal .cep .input-prepend.input-append .btn').show();
+            }
+            else {
+                $('.produto .principal .cep .input-prepend.input-append .btn').hide();
+            }
+        });
+
+        //Cria novo local breadcrumbs
+        
+        if ($('.breadcrumbs').length ){
+        
+            $('#corpo').prepend('<div class="abriga-breadcrumbs"><div class="conteiner"><div class="row-fluid"><div class="bread-inside span6"></div></div></div></div></div>');
+            $('.pagina-produto .abriga-breadcrumbs .conteiner .row-fluid').append('<div class="abriga-compartilhamento span6"></div>');
+            
+        }
+        
+        // Move breadcrumbs
+        $('#corpo .abriga-breadcrumbs .conteiner .row-fluid .bread-inside').prepend($('.breadcrumbs'));
+        
+            
+        $('.abriga-compartilhamento').append('<div class="abriga-fav"></div>');
+        $('.abriga-fav').append($('.produto-compartilhar .lista-favoritos'));
+        $('.lista-favoritos').html('<i class="far fa-heart"></i><span>Favoritos</span>');
+        
+        // Remove antigo compartilhamento
+        $('.produto .produto-compartilhar').remove();
+        
+        // Adiciona cor ao icone home breadcrumbs
+        $('.breadcrumbs ul li i').css('color', '#000'); 
+        
+        // Adiciona cor primÃ¡ria aos hovers dos breadcrumbs
+        $('.breadcrumbs ul li a').hover(function(){
+            $(this).css('color', '#000'); 
+            }, function(){
+            $(this).css('color', '#000'); 
+        });
+        
+        $('.info-principal-produto').after($('.descricao-short'));
+        $('.row-fluid').find('#descricao').closest('.row-fluid').addClass('descricao-new');
+        $('.descricao-new').wrapInner('<div class="box-descricao"></div>');
+        $('.descricao-new').prepend('<div class="descricao-titulo padrao-desc"><strong>Descrição</strong></div>');
+        
+        $('.listagem.aproveite-tambem>.titulo.cor-secundaria').removeClass('titulo cor-secundaria').addClass('padrao-desc');
+        $('.listagem.aproveite-tambem .padrao-desc').html('<strong>Produtos Relacionados</strong>');
+        
+        $('.descricao-titulo.padrao-desc strong').css('color', '#000'); 
+        $('.descricao-titulo.padrao-desc strong').css('border-color', '#000'); 
+        
+        $('.listagem.aproveite-tambem .padrao-desc strong').css('color', '#000'); 
+        $('.listagem.aproveite-tambem .padrao-desc strong').css('border-color', '#000'); 
+        
+        $('.acoes-flutuante').remove();
+        
+        $('<div class="quantity-nav"><div class="quantity-button quantity-up botao-quantidade"><i>+</i></div><div class="quantity-button quantity-down botao-quantidade"><i>-</i></div></div>').insertAfter('.qtde-carrinho');
+        $('.qtde-adicionar-carrinho').each(function() {
+          var spinner = $(this),
+            input = spinner.find('input[type="number"]'),
+            btnUp = spinner.find('.quantity-up'),
+            btnDown = spinner.find('.quantity-down'),
+            min = input.attr('min'),
+            max = input.attr('max');
+    
+          btnUp.click(function() {
+            var oldValue = parseFloat(input.val());
+            if (oldValue >= max) {
+              var newVal = oldValue;
+            } else {
+              var newVal = oldValue + 1;
+            }
+            spinner.find("input").val(newVal);
+            spinner.find("input").trigger("change");
+          });
+    
+          btnDown.click(function() {
+            var oldValue = parseFloat(input.val());
+            if (oldValue <= min) {
+              var newVal = oldValue;
+            } else {
+              var newVal = oldValue - 1;
+            }
+            spinner.find("input").val(newVal);
+            spinner.find("input").trigger("change");
+          });
+    
+        });
+        
+        $('.desconto-a-vista').prepend('<svg id="icone-avista" class="icone-listagem-avista" viewBox="0 -86 512 512" xmlns="http://www.w3.org/2000/svg"><path d="m396 260c-5.519531 0-10 4.480469-10 10s4.480469 10 10 10 10-4.480469 10-10-4.480469-10-10-10zm0 0"/><path d="m356 260c-5.519531 0-10 4.480469-10 10s4.480469 10 10 10 10-4.480469 10-10-4.480469-10-10-10zm0 0"/><path d="m316 260c-5.519531 0-10 4.480469-10 10s4.480469 10 10 10 10-4.480469 10-10-4.480469-10-10-10zm0 0"/><path d="m276 260c-5.519531 0-10 4.480469-10 10s4.480469 10 10 10 10-4.480469 10-10-4.480469-10-10-10zm0 0"/><path d="m236 260c-5.519531 0-10 4.480469-10 10s4.480469 10 10 10 10-4.480469 10-10-4.480469-10-10-10zm0 0"/><path d="m196 260c-5.519531 0-10 4.480469-10 10s4.480469 10 10 10 10-4.480469 10-10-4.480469-10-10-10zm0 0"/><path d="m156 260c-5.519531 0-10 4.480469-10 10s4.480469 10 10 10 10-4.480469 10-10-4.480469-10-10-10zm0 0"/><path d="m116 260c-5.519531 0-10 4.480469-10 10s4.480469 10 10 10 10-4.480469 10-10-4.480469-10-10-10zm0 0"/><path d="m482 0h-452c-16.542969 0-30 13.457031-30 30v280c0 16.542969 13.457031 30 30 30h452c16.542969 0 30-13.457031 30-30v-280c0-16.542969-13.457031-30-30-30zm10 310c0 5.515625-4.484375 10-10 10h-452c-5.515625 0-10-4.484375-10-10v-280c0-5.515625 4.484375-10 10-10h452c5.515625 0 10 4.484375 10 10zm0 0"/><path d="m76 60c-5.523438 0-10 4.476562-10 10v200c0 5.523438 4.476562 10 10 10s10-4.476562 10-10v-200c0-5.523438-4.476562-10-10-10zm0 0"/><path d="m116 60c-5.523438 0-10 4.476562-10 10v160c0 5.523438 4.476562 10 10 10s10-4.476562 10-10v-160c0-5.523438-4.476562-10-10-10zm0 0"/><path d="m156 60c-5.523438 0-10 4.476562-10 10v160c0 5.523438 4.476562 10 10 10s10-4.476562 10-10v-160c0-5.523438-4.476562-10-10-10zm0 0"/><path d="m196 60c-5.523438 0-10 4.476562-10 10v160c0 5.523438 4.476562 10 10 10s10-4.476562 10-10v-160c0-5.523438-4.476562-10-10-10zm0 0"/><path d="m236 60c-5.523438 0-10 4.476562-10 10v160c0 5.523438 4.476562 10 10 10s10-4.476562 10-10v-160c0-5.523438-4.476562-10-10-10zm0 0"/><path d="m276 60c-5.523438 0-10 4.476562-10 10v160c0 5.523438 4.476562 10 10 10s10-4.476562 10-10v-160c0-5.523438-4.476562-10-10-10zm0 0"/><path d="m316 60c-5.523438 0-10 4.476562-10 10v160c0 5.523438 4.476562 10 10 10s10-4.476562 10-10v-160c0-5.523438-4.476562-10-10-10zm0 0"/><path d="m356 60c-5.523438 0-10 4.476562-10 10v160c0 5.523438 4.476562 10 10 10s10-4.476562 10-10v-160c0-5.523438-4.476562-10-10-10zm0 0"/><path d="m396 60c-5.523438 0-10 4.476562-10 10v160c0 5.523438 4.476562 10 10 10s10-4.476562 10-10v-160c0-5.523438-4.476562-10-10-10zm0 0"/><path d="m436 60c-5.523438 0-10 4.476562-10 10v200c0 5.523438 4.476562 10 10 10s10-4.476562 10-10v-200c0-5.523438-4.476562-10-10-10zm0 0"/></svg>');
+        
+}); 
+</script>
