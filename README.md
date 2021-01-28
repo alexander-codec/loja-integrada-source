@@ -1,8 +1,8 @@
 # loja-integrada-source
 Codigo fonte usada na loja integrada - Capturas de Tela
 ![alt text](https://github.com/alexander-codec/loja-integrada-source/raw/main/exemplo.png)
-![alt text](https://github.com/alexander-codec/loja-integrada-source/raw/main/exemplo1.png)
-![alt text](https://github.com/alexander-codec/loja-integrada-source/raw/main/exemplo2.png)
+![alt text](https://github.com/alexander-codec/loja-integrada-source/raw/main/fullpagehome.png)
+![alt text](https://github.com/alexander-codec/loja-integrada-source/raw/main/fullpageproduct.png)
 
 # Como configurar
 ![alt text](https://github.com/alexander-codec/loja-integrada-source/raw/main/layout.png)
