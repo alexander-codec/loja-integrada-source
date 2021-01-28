@@ -221,6 +221,7 @@ table th {background-color: #f2f2f2;}
 
 .produto .principal .desconto-a-vista {font-size:16px;display: block;margin-top: 10px;}
 .produto .principal .icone-listagem-avista {width:42px;height:42px;display: inline-block;vertical-align: middle;margin-right: 10px;}
+.preco-produto.destaque-preco .desconto-a-vista .icone-listagem-avista {display:none;}
 .produto .principal .preco-avista {font-size: 16px;line-height: 16px;}
 .produto .principal .abriga-precoavista {display:inline-block;vertical-align:middle}
 .produto .principal .preco-economiza {color:#646464;font-size:14px}
